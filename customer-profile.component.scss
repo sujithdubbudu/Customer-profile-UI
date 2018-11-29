@@ -1,0 +1,37 @@
+mat-form-field {
+  width: 100%;
+}
+.fedex-ico {
+  font-size: 2.5em !important;
+  float: right;
+  color: #4d148c;
+}
+body .ui-tabview.ui-tabview-top .ui-tabview-nav li.ui-state-active,
+body .ui-tabview.ui-tabview-bottom .ui-tabview-nav li.ui-state-active,
+body .ui-tabview.ui-tabview-left .ui-tabview-nav li.ui-state-active,
+body .ui-tabview.ui-tabview-right .ui-tabview-nav li.ui-state-active {
+  background-color: #4d148c !important;
+  border: 1px solid #4d148c !important;
+}
+.fedex-heading,
+.ui-panel-title {
+  color: #4d148c !important;
+  font-size: 16px !important;
+  // display: inline-block;
+  margin-top: 2px !important;
+  font-weight: 400 !important;
+}
+.pi-minus:before {
+  content: "\21E7"; // 02C4
+}
+.pi-plus:before {
+  content: "\21E9";
+}
+.pi {
+  color: #4d148c;
+  cursor: pointer !important;
+}
+
+// .ui-dialog.ui-widget.ui-shadow.ui-dialog-draggable {
+//   z-index: 501 !important;
+// }

@@ -1,0 +1,426 @@
+<!-- <mat-toolbar color="primary">
+  Customer Profile Creation
+</mat-toolbar> -->
+<!-- <div class="fedex-PriNavbar">
+  <nav class="navbar navbar-default">
+    <ul class="nav justify-content-center">
+      <li class="nav-item" id="1" class="active">
+        <a tabindex="0">Customer Profile Creation</a>
+      </li>
+      <li class="nav-item" id="1" class="active">
+        <a tabindex="0">Search</a>
+      </li>
+      <li class="nav-item" id="1" class="active">
+        <a tabindex="0">History</a>
+      </li>
+    </ul>
+  </nav>
+</div> -->
+
+<form class="example-form" [formGroup]="customerProfileForm" novalidate>
+  <p-panel>
+    <p-header class="fedex-heading">
+      <div class="ui-helper-clearfix">
+        <span class="ui-panel-title">Customer Profile</span>
+        <!-- <p-splitButton [style]="{'float':'right'}" label="Save" icon="pi pi-check" (onClick)="save()" [model]="items"></p-splitButton> -->
+      </div>
+    </p-header>
+    <div class="container">
+      <!-- <span class="ui-float-label">
+        <input id="float-input" type="text" size="30" pInputText>
+        <label for="float-input">Username</label>
+      </span> -->
+      <div class="p-grid" style="margin:0 0 20px 0">
+        <div class="p-col">
+          <mat-form-field>
+            <mat-select placeholder="Role" formControlName="role">
+              <mat-option *ngFor="let roledata of masterData.role" [value]="roledata">
+                {{roledata}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="p-col">
+          <mat-form-field>
+            <mat-select placeholder="Customer Type" formControlName="customerType">
+              <mat-option *ngFor="let custypedata of masterData.customerType" [value]="custypedata">
+                {{custypedata}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <p-panel [toggleable]="true" toggler="header" [style]="{'margin-bottom':'10px'}" formGroupName="primaryDetails">
+        <p-header class="fedex-heading">
+          Primary Details
+        </p-header>
+        <div class="p-grid">
+          <div class="p-col">
+            <mat-form-field>
+              <input matInput placeholder="Name" formControlName="name">
+            </mat-form-field>
+          </div>
+          <div class="p-col">
+            <mat-form-field>
+              <input matInput placeholder="City" formControlName="city">
+            </mat-form-field>
+          </div>
+          <div class="p-col">
+            <mat-form-field>
+              <input matInput placeholder="State" formControlName="state">
+            </mat-form-field>
+          </div>
+        </div>
+        <!-- <div class="p-col">
+            <mat-form-field class="example-full-width">
+              <textarea matInput placeholder="Leave a comment"></textarea>
+            </mat-form-field>
+          </div> -->
+        <div class="p-grid">
+          <div class="p-col">
+
+            <mat-form-field class="example-full-width">
+              <mat-select placeholder="Country" formControlName="country">
+                <mat-option *ngFor="let countrydata of masterData.country" [value]="countrydata">
+                  {{countrydata}}
+                </mat-option>
+              </mat-select>
+              <!-- <input matInput placeholder="Country" formControlName="country"> -->
+            </mat-form-field>
+          </div>
+          <div class="p-col">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="ZIP" formControlName="zip">
+            </mat-form-field>
+          </div>
+          <div class="p-col">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Phone" formControlName="phone">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="p-grid">
+          <div class="p-col">
+            <mat-form-field>
+              <input matInput placeholder="FAX" formControlName="fax">
+            </mat-form-field>
+          </div>
+          <div class="p-col">
+            <mat-form-field>
+              <input matInput placeholder="Email" formControlName="email">
+            </mat-form-field>
+          </div>
+          <div class="p-col">
+            <mat-form-field>
+              <input matInput placeholder="URL" formControlName="url">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="p-grid">
+          <div class="p-col">
+            <mat-form-field>
+              <textarea matInput placeholder="Address" formControlName="address"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </p-panel>
+
+      <p-panel header="Country Specific" [toggleable]="true" toggler="header" formGroupName="countrySpecific" [style]="{'margin-bottom':'10px'}">
+        <!-- fedexAccount: [''],
+        creditStat: [''], -->
+        <!-- ccid: [''],
+          abn: [''],
+          cac: [''],
+          bsb: [''] -->
+        <div class="p-grid">
+          <div class="p-col">
+            <mat-form-field>
+              <input matInput placeholder="FedEx Account" formControlName="fedexAccount">
+            </mat-form-field>
+          </div>
+          <div class="p-col">
+            <mat-form-field>
+              <input matInput placeholder="Credit Status" formControlName="creditStat">
+            </mat-form-field>
+          </div>
+        </div>
+      </p-panel>
+
+      <p-panel header="Contact Information" [toggleable]="true" toggler="header" [style]="{'margin-bottom':'10px'}">
+        <i class="pi pi-times-circle fedex-ico"></i>
+        <i class="pi pi-plus-circle fedex-ico" (click)="isModalVisible=true"></i>
+        <p-tabView>
+          <p-tabPanel header="Primary Contact">
+            <p-table [columns]="colsPrimaryandBilling" [value]="cars" selectionMode="single" [(selection)]="selectedCar"
+              (onRowSelect)="onRowSelect($event)" [paginator]="false">
+
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th *ngFor="let col of columns">
+                    {{col.header}}
+                    <!-- <p-sortIcon [field]="col.field"></p-sortIcon> -->
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr [pSelectableRow]="rowData">
+                  <td *ngFor="let col of columns">
+                    {{rowData[col.field]}}
+                  </td>
+                </tr>
+              </ng-template>
+
+            </p-table>
+          </p-tabPanel>
+          <p-tabPanel header="Billing Contact">
+            <p-table [columns]="colsPrimaryandBilling" [value]="cars" selectionMode="single" [(selection)]="selectedCar"
+              (onRowSelect)="onRowSelect($event)" [paginator]="false">
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th *ngFor="let col of columns">
+                    {{col.header}}
+                    <!-- <p-sortIcon [field]="col.field"></p-sortIcon> -->
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr [pSelectableRow]="rowData">
+                  <td *ngFor="let col of columns">
+                    {{rowData[col.field]}}
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </p-tabPanel>
+        </p-tabView>
+      </p-panel>
+      <p-panel header="Instruction" [toggleable]="true" toggler="header" [style]="{'margin-bottom':'10px'}">
+        <i class="pi pi-times-circle fedex-ico"></i>
+        <i class="pi pi-plus-circle fedex-ico" (click)="isPrimryInstVisible=true"></i>
+        <p-tabView>
+          <p-tabPanel header="Primary">
+            <p-table [columns]="colsPrimaryInstruction" [value]="cars" selectionMode="single" [(selection)]="selectedCar"
+              (onRowSelect)="onRowSelect($event)" [paginator]="false">
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th *ngFor="let col of columns">
+                    {{col.header}}
+                    <!-- <p-sortIcon [field]="col.field"></p-sortIcon> -->
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr [pSelectableRow]="rowData">
+                  <td *ngFor="let col of columns">
+                    {{rowData[col.field]}}
+                  </td>
+                </tr>
+              </ng-template>
+
+            </p-table>
+          </p-tabPanel>
+          <p-tabPanel header="Free Text">
+            <mat-form-field class="example-full-width">
+              <textarea matInput placeholder="Leave a comment" formControlName="freetextinstruction"></textarea>
+            </mat-form-field>
+          </p-tabPanel>
+        </p-tabView>
+      </p-panel>
+      <p-panel header="Notification" [toggleable]="true" toggler="header" [style]="{'margin-bottom':'10px'}">
+        <i class="pi pi-times-circle fedex-ico"></i>
+        <i class="pi pi-plus-circle fedex-ico" (click)="isNotificationVisible=true"></i>
+        <p-table [columns]="colsNotification" [value]="cars" selectionMode="single" [(selection)]="selectedCar"
+          (onRowSelect)="onRowSelect($event)" [paginator]="false">
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columns">
+                {{col.header}}
+                <!-- <p-sortIcon [field]="col.field"></p-sortIcon> -->
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pSelectableRow]="rowData">
+              <td *ngFor="let col of columns">
+                {{rowData[col.field]}}
+              </td>
+            </tr>
+          </ng-template>
+
+        </p-table>
+      </p-panel>
+      <!-- <p-panel header="Billing" [toggleable]="true" toggler="header" [style]="{'margin-bottom':'10px'}">
+        <i class="pi pi-times-circle fedex-ico"></i>
+        <i class="pi pi-plus-circle fedex-ico"></i>
+        <p-table [columns]="colsBilling" [value]="cars" selectionMode="single" [(selection)]="selectedCar"
+          (onRowSelect)="onRowSelect($event)" [paginator]="false">
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columns">
+                {{col.header}}
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pSelectableRow]="rowData">
+              <td *ngFor="let col of columns">
+                {{rowData[col.field]}}
+              </td>
+            </tr>
+          </ng-template>
+
+        </p-table>
+      </p-panel> -->
+      <!-- <p-panel header="Image" [toggleable]="true" toggler="header" [style]="{'margin-bottom':'10px'}">
+        <i class="pi pi-times-circle fedex-ico"></i>
+        <i class="pi pi-plus-circle fedex-ico"></i>
+        <p-table [columns]="colsImage" [value]="cars" selectionMode="single" [(selection)]="selectedCar" (onRowSelect)="onRowSelect($event)"
+          [paginator]="false">
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columns">
+                {{col.header}}
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pSelectableRow]="rowData">
+              <td *ngFor="let col of columns">
+                {{rowData[col.field]}}
+              </td>
+            </tr>
+          </ng-template>
+
+        </p-table>
+      </p-panel> -->
+    </div>
+    <p-footer>
+      <div style="text-align:right">
+        <button pButton type="button" icon="pi pi-plus" label="Save" class="ui-button-info" style="margin-right: .25em"></button>
+        <button pButton type="button" icon="pi pi-search" label="Save & Exist" class="ui-button-success" style="margin-right: .25em"></button>
+        <button pButton type="button" icon="pi pi-search" label="Reset" class="ui-button-success" style="margin-right: .25em"></button>
+        <button pButton type="button" icon="pi pi-search" label="Cancel" class="ui-button-success" style="margin-right: .25em"></button>
+      </div>
+    </p-footer>
+  </p-panel>
+</form>
+
+<!-- ----------------------------PopUp------------------- -->
+
+<!-- Primary Contact -->
+<p-dialog header="Primary Contact" [(visible)]="isModalVisible" [modal]="true" [responsive]="true" [width]="350"
+  [minWidth]="400" [minY]="70" [maximizable]="true" [baseZIndex]="10000">
+  <form [formGroup]="primaryAndBillingContactForm">
+    <div class="p-grid">
+      <div class="p-col">
+        <mat-form-field>
+          <input matInput placeholder="Name" formControlName="name">
+        </mat-form-field>
+      </div>
+      <div class="p-col">
+        <mat-form-field>
+          <input matInput placeholder="Dept" formControlName="dept">
+        </mat-form-field>
+      </div>
+
+    </div>
+    <div class="p-grid">
+      <div class="p-col">
+        <mat-form-field>
+          <input matInput placeholder="Phone" formControlName="phone">
+        </mat-form-field>
+      </div>
+      <div class="p-col">
+        <mat-form-field>
+          <input matInput placeholder="EXT" formControlName="ext">
+        </mat-form-field>
+      </div>
+
+    </div>
+    <div class="p-grid">
+      <div class="p-col">
+        <mat-form-field>
+          <input matInput placeholder="Fax" formControlName="fax">
+        </mat-form-field>
+      </div>
+      <div class="p-col">
+        <mat-form-field>
+          <input matInput placeholder="Mobile" formControlName="mobile">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="p-grid">
+      <div class="p-col">
+        <mat-form-field>
+          <input matInput placeholder="Email" formControlName="email">
+        </mat-form-field>
+      </div>
+    </div>
+    <p-footer>
+      <button type="button" pButton icon="pi pi-check" (click)="display=false" label="Yes"></button>
+      <button type="button" pButton icon="pi pi-close" (click)="display=false" label="No" class="ui-button-secondary"></button>
+    </p-footer>
+  </form>
+</p-dialog>
+
+
+
+<!-- Bill Contact -->
+
+<!-- Primary Instruction -->
+<p-dialog header="Primary Instruction" [(visible)]="isPrimryInstVisible" [modal]="true" [responsive]="true" [width]="350"
+  [minWidth]="400" [minY]="70" [maximizable]="true" [baseZIndex]="0">
+  <form [formGroup]="primaryInstruction">
+    <div class="p-grid">
+      <mat-form-field>
+        <mat-select placeholder="Type Code" formControlName="typeCode">
+          <mat-option *ngFor="let typedata of masterData.instruction" [value]="typedata">
+            {{typedata.typeCode}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Type Description" formControlName="typeDesc">
+      </mat-form-field>
+      <mat-form-field>
+        <textarea matInput placeholder="Leave a comment" formControlName="comment"></textarea>
+      </mat-form-field>
+    </div>
+    <p-footer>
+      <button type="button" pButton icon="pi pi-check" (click)="display=false" label="Yes"></button>
+      <button type="button" pButton icon="pi pi-close" (click)="display=false" label="No" class="ui-button-secondary"></button>
+    </p-footer>
+  </form>
+</p-dialog>
+<!-- Notification -->
+<p-dialog header="Notification" [(visible)]="isNotificationVisible" [modal]="true" [responsive]="true" [width]="350"
+  [minWidth]="400" [minY]="70" [maximizable]="true" [baseZIndex]="0">
+  <form [formGroup]="primaryInstruction">
+    <div class="p-grid">
+      <mat-form-field>
+        <mat-select placeholder="Type Code" formControlName="typeCode">
+          <mat-option *ngFor="let typedata of masterData.instruction" [value]="typedata">
+            {{typedata.typeCode}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Type Description" formControlName="typeDesc">
+      </mat-form-field>
+      <mat-form-field>
+        <textarea matInput placeholder="Leave a comment" formControlName="comment"></textarea>
+      </mat-form-field>
+    </div>
+    <p-footer>
+      <button type="button" pButton icon="pi pi-check" (click)="display=false" label="Yes"></button>
+      <button type="button" pButton icon="pi pi-close" (click)="display=false" label="No" class="ui-button-secondary"></button>
+    </p-footer>
+  </form>
+</p-dialog>
+<!-- Billing -->
+
+
+<!-- Image -->
+
+<pre>{{this.customerProfileForm.getRawValue() | json}}</pre>
